@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+@import "sass-mediaqueries/media-queries";
+@import "bourbon/app/assets/stylesheets/bourbon";
+
+@import "normalize-scss/normalize";
+
+// Foundation 5 imports
+// @import "foundation_custom_settings";
+// @import "foundation/scss/foundation/functions";
+// @import "foundation/scss/foundation/components/grid";
+// @import "foundation/scss/foundation/components/visibility";
+
+@import "vars";
+@import "fonts";
+@import "base";
+
+@import "block/b-block";
+
+// For every folder in the atlases folder, a scss file with css rules will be
+// generated in the styles/atlas directory, having the same name as the origin
+// directory. (The following example imports the "a-icon.scss" file.)
+// @import "atlas/a-icon";
+
+// Must always be at the bottom
+@import "shame";
