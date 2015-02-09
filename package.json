@@ -1,6 +1,6 @@
 {
   "name": "generator-z-frontend",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A Yeoman Generator to generate frontend boilerplate.",
   "license": "MIT",
   "main": "app/index.js",
