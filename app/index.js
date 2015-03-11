@@ -91,6 +91,10 @@ module.exports = yeoman.generators.Base.extend({
       this.templatePath('package.json'),
       this.destinationPath('package.json')
     );
+    this.fs.copy(
+      this.templatePath('.editorconfig'),
+      this.destinationPath('.editorconfig')
+    );
   },
 
   install: function () {
