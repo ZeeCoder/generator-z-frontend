@@ -20,7 +20,7 @@ var _ = require('lodash');
 
 gulp.task('bower', function() {
     return gulp
-        .src(bower(), { base: src + '/bower_components' })
+        .src(bower(), {base: src + '/bower_components'})
         .pipe(gulp.dest(dest + '/' + gulp_bower_dest_dir));
 });
 
@@ -55,7 +55,7 @@ gulp.task('styles', function () {
             imagePath: '../' + images_dest_dir
         }))
         .on('error', handleErrors)
-        .pipe($.autoprefixer({ browsers: ['> 1%'] }))
+        .pipe($.autoprefixer({browsers: ['> 1%']}))
         .pipe(env == 'dev' ? $.sourcemaps.write() : $.util.noop())
         .pipe(env == 'prod' ? $.csso() : $.util.noop())
         .pipe(gulp.dest(dest + '/' + css_dest_dir));

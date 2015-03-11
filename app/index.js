@@ -84,6 +84,10 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('bower.json')
     );
     this.fs.copy(
+      this.templatePath('bower.json.dist'),
+      this.destinationPath('bower.json.dist')
+    );
+    this.fs.copy(
       this.templatePath('package.json'),
       this.destinationPath('package.json')
     );
