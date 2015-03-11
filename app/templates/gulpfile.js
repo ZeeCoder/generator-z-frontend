@@ -15,7 +15,7 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var bower = require('main-bower-files');
-var atlas = require('css-sprite').stream;
+var sprite = require('css-sprite').stream;
 var _ = require('lodash');
 
 gulp.task('bower', function() {
@@ -26,7 +26,7 @@ gulp.task('bower', function() {
 
 gulp.task('scripts', function() {
     var arrayBundle = function(srcArray) {
-        _.each(srcArray, function(sourcePath) { 
+        _.each(srcArray, function(sourcePath) {
             browserify({
                 entries: sourcePath,
                 debug: env == 'dev',
@@ -61,21 +61,21 @@ gulp.task('styles', function () {
         .pipe(gulp.dest(dest + '/' + css_dest_dir));
 });
 
-gulp.task('atlases', function () {
+gulp.task('sprites', function () {
     return gulp
-        .src(src + '/atlases/a-icon/*.png')
-        .pipe(atlas({
+        .src(src + '/sprites/a-icon/*.png')
+        .pipe(sprite({
             name: 'a-icon',
             style: 'a-icon.scss',
-            cssPath: '../' + images_dest_dir + '/atlases',
+            cssPath: '../' + images_dest_dir + '/sprites',
             processor: 'css',
             prefix: 'a-icon',
-            template: src + '/atlases/css.mustache'
+            template: src + '/sprites/css.mustache'
         }))
         .pipe($.if(
             '*.png',
-            gulp.dest(src + '/' + images_dest_dir + '/atlases'),
-            gulp.dest(src + '/styles/atlas/')
+            gulp.dest(src + '/' + images_dest_dir + '/sprites'),
+            gulp.dest(src + '/styles/sprite/')
         ))
 });
 
