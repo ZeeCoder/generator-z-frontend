@@ -93,10 +93,7 @@ gulp.task('watch', function() {
     $.watch(src + '/styles/**/*.scss', function () {
         gulp.start('styles');
     });
-    $.watch([
-        src + '/scripts/**/*.js',
-        src + '/bower_components/clam/**/*.js'
-    ], function () {
+    $.watch(src + '/scripts/**/*.js', function () {
         gulp.start('scripts');
     });
     $.watch(src + '/atlases/a-icon/*.png', function () {
