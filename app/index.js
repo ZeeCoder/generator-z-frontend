@@ -20,7 +20,7 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'input',
         name: 'yo_front_src',
-        message: 'The folder\'s path which you want to store your raw assets in.',
+        message: 'The folder\'s path which you want to store your asset source files in.',
         default: 'front_src'
       }, {
         type: 'input',
@@ -30,12 +30,12 @@ module.exports = yeoman.generators.Base.extend({
       }, {
         type: 'input',
         name: 'yo_js_dest_dir',
-        message: 'The directory containing the builded js files in the public folder.',
+        message: 'The directory containing the final js files in the public folder.',
         default: 'js'
       }, {
         type: 'input',
         name: 'yo_css_dest_dir',
-        message: 'The directory containing the builded css files in the public folder.',
+        message: 'The directory containing the final css files in the public folder.',
         default: 'css'
       }, {
         type: 'input',
@@ -51,9 +51,9 @@ module.exports = yeoman.generators.Base.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      // This is needed to keep the '<%= error.message %>' string in the
-      // gulpfile
       props.error = {
+        // This is needed to keep the '<%= error.message %>' string in the
+        // gulpfile
         message: '<%= error.message %>'
       };
       this.props = props;
@@ -96,7 +96,7 @@ module.exports = yeoman.generators.Base.extend({
         if (this.options['skip-install']) {
           return;
         }
-        
+
         this.spawnCommand('gulp', ['bower']);
         this.spawnCommand('gulp', ['styles']);
         this.spawnCommand('gulp', ['scripts']);
