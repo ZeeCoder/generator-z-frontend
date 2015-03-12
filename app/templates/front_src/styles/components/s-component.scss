@@ -1,0 +1,18 @@
+// Components like this must only be included in the main scss files.
+// (Ex.: style.scss)
+// File naming convention: "s-my-component".
+// Classnames are prefered to tags as the rules' selectors. If the component is
+// small enough however, and it is certain, that other components won't ever be
+// embedded in it, then it can use tag-selectors too. (Ex.: "h1", "a" etc.)
+$amp: ".s-component";
+
+#{$amp} {
+
+    // For hover effects, that should not trigger on mobile.
+    // This snippet assumes, that this can be detected via the md_isMobile class
+    html.not(.md_isMobile) & {
+        &:hover {
+            // Changing some rules.
+        }
+    }
+}

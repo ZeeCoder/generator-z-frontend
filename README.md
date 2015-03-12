@@ -11,5 +11,4 @@ generator.
 
 #### Description
 
-This generator will scaffold a basic directory structure and files for frontend
-development, using "[Clam](https://github.com/ZeeCoder/clam)", "[Browserify](http://browserify.org/)" and others.
+This is a generator used by the Zalehy Ltd. internally.

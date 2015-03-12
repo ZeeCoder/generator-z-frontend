@@ -23,7 +23,8 @@
     "main-bower-files": "^2.0.0",
     "node-sass": "1.0.3",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.0.0"
+    "vinyl-source-stream": "^1.0.0",
+    "yargs": "^2.3.0"
   },
   "engines": {
     "node": ">=0.8.0"

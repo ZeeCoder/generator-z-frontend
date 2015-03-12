@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+// 3rd party
+@import "sass-mediaqueries/media-queries";
+@import "bourbon/app/assets/stylesheets/bourbon";
+@import "normalize-scss/normalize";
+
+// Foundation
+// @import "foundation/scss/foundation/functions";
+// @import "foundation/scss/foundation/components/grid";
+// @import "foundation/scss/foundation/components/visibility";
+
+// Configurations
+// @import "config/foundation";
+@import "config/global";
+
+// Basic styles
+@import "fonts";
+@import "base";
+
+// Components
+@import "components/s-component";
+
+// For every folder in the sprites/ folder, a scss file with css rules will be
+// generated in the styles/sprites/ directory, having the same name as the
+// origin directory. The following example imports the "a-icon.scss" file,
+// which is generated from the sprites/a-icon folder's contents.
+// @import "sprites/a-icon";
+
+// Must always be at the bottom, so that it could overwrite anything temporarily.
+@import "shame";
