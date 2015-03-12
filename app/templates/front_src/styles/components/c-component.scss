@@ -4,7 +4,7 @@
 // Classnames are prefered to tags as the rules' selectors. If the component is
 // small enough however, and it is certain, that other components won't ever be
 // embedded in it, then it can use tag-selectors too. (Ex.: "h1", "a" etc.)
-$amp: ".s-component";
+$amp: ".c-component";
 
 #{$amp} {
 
