@@ -1,13 +1,6 @@
 // THIS IS AN EXAMPLE FILE, READ THE COMMENTS
 
 // Notes:
-// - Components like this must only be included in the main scss files.
-//   (Ex.: style.scss)
-// - File naming convention: "c-my-component".
-// - Classnames are prefered to tags as the rules' selectors. If the component
-//   is small enough however (like a btn), and it is certain, that other
-//   components won't ever be embedded in it, then it can use tag-selectors too.
-//   (Ex.: "h1", "a" etc.)
 // - In a real project, colors must be collected to variables and stored in the
 //   config/_global.scss file.
 // - To test how this button behaves on mobile devices, add the "md_isMobile"
