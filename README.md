@@ -12,3 +12,5 @@ generator.
 #### Description
 
 This is a generator used by the Zalehy Ltd. internally.
+
+(ATM) Private trello board: https://trello.com/b/wqSXdT7L
