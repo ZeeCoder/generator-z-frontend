@@ -4,6 +4,8 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 
 module.exports = yeoman.generators.Base.extend({
+    libs: {},
+
     initializing: function () {
         this.pkg = require('../package.json');
     },
@@ -47,37 +49,78 @@ module.exports = yeoman.generators.Base.extend({
                 name: 'yo_gulp_bower_dest_dir',
                 message: 'The directory containing the bower assets in the public folder.',
                 default: 'bower'
+            }, {
+                type: 'checkbox',
+                name: 'libs',
+                message: 'What libraries do you want to include?',
+                choices: [{
+                    name: 'Clam',
+                    value: 'clam',
+                    checked: true
+                }, {
+                    name: 'Foundation',
+                    value: 'foundation',
+                    checked: true
+                }, {
+                    name: 'Modernizr',
+                    value: 'modernizr',
+                    checked: true
+                }, {
+                    name: 'Q',
+                    value: 'q',
+                    checked: true
+                }]
             }
         ];
 
-        this.prompt(prompts, function (props) {
-            props.error = {
+        this.prompt(prompts, function (answers) {
+            answers.error = {
                 // This is needed to keep the '<%= error.message %>' string in the
                 // gulpfile
                 message: '<%= error.message %>'
             };
-            this.props = props;
+
+            this.answers = answers;
+
+            this.libs.clam = this.answers.libs.indexOf('clam') !== -1;
+            this.libs.foundation = this.answers.libs.indexOf('foundation') !== -1;
+            this.libs.modernizr = this.answers.libs.indexOf('modernizr') !== -1;
+            this.libs.q = this.answers.libs.indexOf('q') !== -1;
 
             done();
         }.bind(this));
     },
 
-    writing: function () {
+    isLibChecked: function(key) {
+        return this.answers.libs.indexOf(key) !== -1;
+    },
+
+    writing: {
+        packageJSON: function () {
+          this.template('package.json', 'package.json');
+        },
+
+        bowerJSON: function () {
+          this.template('bower.json', 'bower.json');
+        }
+    },
+
+    writing_old: function () {
         this.directory(
             this.templatePath('front_src'),
-            this.destinationPath(this.props.yo_front_src)
+            this.destinationPath(this.answers.yo_front_src)
         );
-        this.mkdir(this.destinationPath(this.props.yo_web));
-        this.mkdir(this.destinationPath(this.props.yo_web + '/' + this.props.yo_images_dest_dir));
+        this.mkdir(this.destinationPath(this.answers.yo_web));
+        this.mkdir(this.destinationPath(this.answers.yo_web + '/' + this.answers.yo_images_dest_dir));
         this.fs.copyTpl(
             this.templatePath('gulpfile.js'),
             this.destinationPath('gulpfile.js'),
-            this.props
+            this.answers
         );
         this.fs.copyTpl(
             this.templatePath('.bowerrc'),
             this.destinationPath('.bowerrc'),
-            this.props
+            this.answers
         );
         this.fs.copy(
             this.templatePath('bower.json'),
