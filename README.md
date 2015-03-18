@@ -20,6 +20,13 @@ prefixed with an underscore.
 
 For additional details about a particular file's role, check out the comments.
 
+**Classname naming conventions**
+
+Presentational classes and javascript hooks must be separated.
+
+Components must be prefixed with `c-`,
+Javascript hooks must be prefixed with `js-`.
+
 **The `styles/overwrites/` folder**
 
 In this folder only 3rd party overwrites can be placed.
