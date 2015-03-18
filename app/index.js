@@ -96,56 +96,50 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     writing: {
-        packageJSON: function () {
-          this.template('package.json', 'package.json');
+        all: function () {
+            this.directory(
+                this.templatePath('front_src'),
+                this.destinationPath(this.answers.yo_front_src)
+            );
+
+            this.mkdir(this.destinationPath(this.answers.yo_web));
+            this.mkdir(this.destinationPath(this.answers.yo_web + '/' + this.answers.yo_images_dest_dir));
         },
 
-        bowerJSON: function () {
-          this.template('bower.json', 'bower.json');
+        templates: function () {
+            this.template('package.json', 'package.json');
+            this.template('bower.json', 'bower.json');
+            this.template(
+                'front_src/scripts/app.js',
+                this.answers.yo_front_src + '/scripts/app.js'
+            );
+            this.fs.copyTpl(
+                this.templatePath('gulpfile.js'),
+                this.destinationPath('gulpfile.js'),
+                this.answers
+            );
+            this.fs.copyTpl(
+                this.templatePath('.bowerrc'),
+                this.destinationPath('.bowerrc'),
+                this.answers
+            );
+            this.fs.copy(
+                this.templatePath('bower.json.dist'),
+                this.destinationPath('bower.json.dist')
+            );
+            this.fs.copy(
+                this.templatePath('package.json.dist'),
+                this.destinationPath('package.json.dist')
+            );
+            this.fs.copy(
+                this.templatePath('.editorconfig'),
+                this.destinationPath('.editorconfig')
+            );
+            this.fs.copy(
+                this.templatePath('gitattributes'),
+                this.destinationPath('gitattributes')
+            );
         }
-    },
-
-    writing_old: function () {
-        this.directory(
-            this.templatePath('front_src'),
-            this.destinationPath(this.answers.yo_front_src)
-        );
-        this.mkdir(this.destinationPath(this.answers.yo_web));
-        this.mkdir(this.destinationPath(this.answers.yo_web + '/' + this.answers.yo_images_dest_dir));
-        this.fs.copyTpl(
-            this.templatePath('gulpfile.js'),
-            this.destinationPath('gulpfile.js'),
-            this.answers
-        );
-        this.fs.copyTpl(
-            this.templatePath('.bowerrc'),
-            this.destinationPath('.bowerrc'),
-            this.answers
-        );
-        this.fs.copy(
-            this.templatePath('bower.json'),
-            this.destinationPath('bower.json')
-        );
-        this.fs.copy(
-            this.templatePath('bower.json.dist'),
-            this.destinationPath('bower.json.dist')
-        );
-        this.fs.copy(
-            this.templatePath('package.json'),
-            this.destinationPath('package.json')
-        );
-        this.fs.copy(
-            this.templatePath('package.json.dist'),
-            this.destinationPath('package.json.dist')
-        );
-        this.fs.copy(
-            this.templatePath('.editorconfig'),
-            this.destinationPath('.editorconfig')
-        );
-        this.fs.copy(
-            this.templatePath('gitattributes'),
-            this.destinationPath('gitattributes')
-        );
     },
 
     install: function () {

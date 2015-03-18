@@ -1,13 +1,17 @@
 'use strict';
+<% if (libs.clam) { %>
 // var cutil = require('clam/core/util');
-// var $ = require('jquery');
 // var module = require('./clam_module/module');
-// var shame = require('module/shame');
-// var global = require('module/global');
+<% } %>
+// var $ = require('jquery');
+var shame = require('module/shame');
+var global = require('module/global');
+<% if (libs.clam) { %>
 
 // Clam modules
 // cutil.createPrototypes(module);
+<% } %>
 
 // Standard modules
-// shame.init();
-// global.init();
+global.init();
+shame.init();
