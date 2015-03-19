@@ -48,7 +48,9 @@ Ex.: "_my-mixin.scss", which contains the "my-mixin" mixin.
 - Classnames are prefered to tags as the rules' selectors. If the component
   is small enough however (like a btn), and it is certain, that other
   components won't ever be embedded in it, then it can use tag-selectors too.
-  (Ex.: "h1", "a" etc.)
+  (Ex.: "h1", "a" etc.) This is something that needs to be discussed by
+  the team working on the project. For a true OOCSS workflow, tag selectors are
+  prohibited.
 - Colors must be collected to variables and stored in the
   `config/_global.scss` file.
 
