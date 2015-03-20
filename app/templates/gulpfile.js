@@ -67,22 +67,32 @@ gulp.task('styles', function () {
         .pipe(gulp.dest(dest(css_dest_dir)));
 });
 
+
 gulp.task('sprites', function () {
-    return gulp
-        .src(src('sprites/a-icon/*.png'))
-        .pipe(sprite({
-            name: 'a-icon',
-            style: 'a-icon.scss',
-            cssPath: '../' + images_dest_dir + '/sprites',
-            processor: 'css',
-            prefix: 'a-icon',
-            template: src('sprites/css.mustache')
-        }))
-        .pipe($.if(
-            '*.png',
-            gulp.dest(src(images_dest_dir + '/sprites')),
-            gulp.dest(src('styles/sprites/'))
-        ))
+    var runSpriteBuild = function(folderPath, spriteName, processor) {
+        gulp
+            .src(folderPath + '*.png')
+            .pipe(sprite({
+                name: spriteName,
+                style: spriteName + '-' + processor + '.scss',
+                cssPath: '../' + images_dest_dir + '/sprites',
+                processor: processor,
+                prefix: spriteName
+            }))
+            .pipe($.if(
+                '*.png',
+                gulp.dest(src(images_dest_dir + '/sprites')),
+                gulp.dest(src('styles/sprites/'))
+            ));
+    };
+
+    glob(src('sprites/*/'), {}, function(er, folders) {
+        _.each(folders, function(folderPath) {
+            var spriteName = path.basename(folderPath);
+            runSpriteBuild(folderPath, spriteName, 'css');
+            runSpriteBuild(folderPath, spriteName, 'scss');
+        });
+    });
 });
 
 gulp.task('images', function () {
@@ -102,8 +112,8 @@ gulp.task('watch', function() {
     $.watch(src('scripts/**/*.js'), function () {
         gulp.start('scripts');
     });
-    $.watch(src('atlases/a-icon/*.png'), function () {
-        gulp.start('atlases');
+    $.watch(src('sprites/**/*.png'), function () {
+        gulp.start('sprites');
     });
 });
 

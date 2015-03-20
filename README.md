@@ -24,8 +24,9 @@ For additional details about a particular file's role, check out the comments.
 
 Presentational classes and javascript hooks must be separated.
 
-Components must be prefixed with `c-`,
-Javascript hooks must be prefixed with `js-`.
+ - Components must be prefixed with `c-`,
+ - Sprite classes must be prefixed with `s-`,
+ - Javascript hooks must be prefixed with `js-`.
 
 **The `styles/overwrites/` folder**
 
