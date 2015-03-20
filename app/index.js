@@ -2,6 +2,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var fs = require('fs');
 
 module.exports = yeoman.generators.Base.extend({
     libs: {},
@@ -17,6 +18,8 @@ module.exports = yeoman.generators.Base.extend({
         this.log(yosay(
             'Welcome to the ' + chalk.red('Z-Frontend') + ' generator!'
         ));
+
+        this.log(chalk.bold('Important to note:') + ' after generation is done, creation of the\n' + chalk.dim('`<public-dir>/<images-dir>`') + ' symlink is not handled automatically,\nso you have to create it manually.\n');
 
         var prompts = [
             {
