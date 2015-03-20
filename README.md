@@ -28,6 +28,14 @@ Presentational classes and javascript hooks must be separated.
  - Sprite classes must be prefixed with `s-`,
  - Javascript hooks must be prefixed with `js-`.
 
+**The `sprites/` folder**
+
+This folder contains additional folders, like "s-icon".
+These folders contains the **png** images which are the source of the
+generated sprite images. Also: for every sprite folder, two additional
+sass file will be generated, one containing the css rules while the other
+containing the sass mixins.
+
 **The `styles/overwrites/` folder**
 
 In this folder only 3rd party overwrites can be placed.
