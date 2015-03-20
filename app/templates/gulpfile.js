@@ -40,9 +40,8 @@ gulp.task('scripts', function() {
             .on('error', handleErrors)
             .pipe(source(path.basename(sourcePath)))
             .pipe(buffer())
-            // Uglify is not working well with browserify, so I disabled it
-            // temporarily
-            // .pipe(env == 'prod' ? $.uglify() : $.util.noop())
+            // Mangling sometimes screwed up the browserified modules.
+            .pipe(env == 'prod' ? $.uglify(mangle: false) : $.util.noop())
             .pipe(gulp.dest(dest(js_dest_dir)));
         });
     };
