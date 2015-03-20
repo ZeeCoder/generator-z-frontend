@@ -1,5 +1,6 @@
 {
   "name": "project",
+  "private": true,
   "devDependencies": {
     "browserify": "^6.3.3",
     "browserify-shim": "~3.8.2",
