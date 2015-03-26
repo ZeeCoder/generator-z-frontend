@@ -106,7 +106,6 @@ module.exports = yeoman.generators.Base.extend({
             );
 
             this.mkdir(this.destinationPath(this.answers.yo_web));
-            this.mkdir(this.destinationPath(this.answers.yo_web + '/' + this.answers.yo_images_dest_dir));
         },
 
         templates: function () {
