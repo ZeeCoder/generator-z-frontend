@@ -1,7 +1,7 @@
 'use strict';
 <% if (libs.clam) { %>
 // var cutil = require('clam/core/util');
-// cutil.moduleConf.prefix = 'jsc'; // Clam uses the 'jsm' prefix by default.
+// cutil.notation.module.prefix = 'jsc-'; // Clam uses the 'jsm' prefix by default.
 // var module = require('./clam_module/module');
 <% } %>
 // var $ = require('jquery');
