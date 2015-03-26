@@ -41,7 +41,7 @@ gulp.task('scripts', function() {
             .pipe(source(path.basename(sourcePath)))
             .pipe(buffer())
             // Mangling sometimes screwed up the browserified modules.
-            .pipe(env == 'prod' ? $.uglify(mangle: false) : $.util.noop())
+            .pipe(env == 'prod' ? $.uglify({mangle: false}) : $.util.noop())
             .pipe(gulp.dest(dest(js_dest_dir)));
         });
     };
