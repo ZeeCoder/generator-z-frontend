@@ -74,7 +74,7 @@ gulp.task('sprites', function () {
             .pipe(sprite({
                 name: spriteName,
                 style: spriteName + '-' + processor + '.scss',
-                cssPath: '../' + images_dest_dir + '/sprites',
+                cssPath: '../' + images_dest_dir + '/sprites/',
                 processor: processor,
                 prefix: spriteName
             }))
