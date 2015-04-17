@@ -14,6 +14,12 @@
 // @import "foundation/scss/foundation/components/grid";
 // @import "foundation/scss/foundation/components/visibility";
 
+// For every folder in the sprites/ folder, two scss files will be generated
+// containing sass mixins and css rules. The filenames will be the same as the
+// folder's name suffixed with either 'css' or 'scss'.
+// @import "sprites/s-icon-css";
+// @import "sprites/s-icon-scss";
+
 // Basic styles
 @import "fonts";
 @import "base";
@@ -25,12 +31,6 @@
 // Components
 // @import "components/c-a-component";
 // @import "components/c-btn-example";
-
-// For every folder in the sprites/ folder, two scss files will be generated
-// containing sass mixins and css rules. The filenames will be the same as the
-// folder's name suffixed with either 'css' or 'scss'.
-// @import "sprites/s-icon-css";
-// @import "sprites/s-icon-scss";
 
 // Must always be at the bottom, so that it could overwrite anything temporarily.
 @import "shame";
