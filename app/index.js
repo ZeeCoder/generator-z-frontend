@@ -112,8 +112,8 @@ module.exports = yeoman.generators.Base.extend({
             this.template('package.json', 'package.json');
             this.template('bower.json', 'bower.json');
             this.template(
-                'front_src/scripts/app.js',
-                this.answers.yo_front_src + '/scripts/app.js'
+                'front_src/scripts/script.js',
+                this.answers.yo_front_src + '/scripts/script.js'
             );
             this.fs.copyTpl(
                 this.templatePath('gulpfile.js'),
