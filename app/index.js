@@ -111,6 +111,7 @@ module.exports = yeoman.generators.Base.extend({
         templates: function () {
             this.template('package.json', 'package.json');
             this.template('bower.json', 'bower.json');
+            this.template('.gitignore', '.gitignore');
             this.template(
                 'front_src/scripts/script.js',
                 this.answers.yo_front_src + '/scripts/script.js'
