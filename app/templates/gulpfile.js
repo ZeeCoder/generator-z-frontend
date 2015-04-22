@@ -66,18 +66,23 @@ gulp.task('styles', function () {
         .pipe(gulp.dest(dest(css_dest_dir)));
 });
 
-
 gulp.task('sprites', function () {
     var runSpriteBuild = function(folderPath, spriteName, processor) {
+        var conf = {
+            name: spriteName,
+            style: spriteName + '-' + processor + '.scss',
+            cssPath: '../' + images_dest_dir + '/sprites/',
+            processor: processor,
+            prefix: spriteName
+        };
+
+        if (processor == 'css') {
+            conf.template = src('sprites/css.mustache');
+        }
+
         gulp
             .src(folderPath + '*.png')
-            .pipe(sprite({
-                name: spriteName,
-                style: spriteName + '-' + processor + '.scss',
-                cssPath: '../' + images_dest_dir + '/sprites/',
-                processor: processor,
-                prefix: spriteName
-            }))
+            .pipe(sprite(conf))
             .pipe($.if(
                 '*.png',
                 gulp.dest(src(images_dest_dir + '/sprites')),
