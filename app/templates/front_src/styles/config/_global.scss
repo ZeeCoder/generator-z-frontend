@@ -11,6 +11,13 @@ $g-fallback-font: "Open Sans", Arial, sans-serif;
 $c-white: #fff;
 $c-black: #000;
 
+// Z-indexes
+// For popups, overlays and other componenst placed "over" the standard content
+// a z-index is always declared. By collecting these z-indexes here, you can
+// organise them better. (It does not mean to collect every single z-indexes
+// here, only those that could potentially overlap with each other.)
+// $z-overlay-menu: 200;
+
 // font-weights
 $fw-thin       : 100;
 $fw-extralight : 200;
