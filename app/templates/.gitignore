@@ -1,5 +1,0 @@
-<%= answers.yo_front_src %>/bower_components
-<%= answers.yo_web %>/css
-<%= answers.yo_web %>/js
-<%= answers.yo_web %>/bower
-node_modules

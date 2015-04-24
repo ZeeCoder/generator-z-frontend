@@ -111,7 +111,11 @@ module.exports = yeoman.generators.Base.extend({
         templates: function () {
             this.template('package.json', 'package.json');
             this.template('bower.json', 'bower.json');
-            this.template('.gitignore', '.gitignore');
+            this.fs.copyTpl(
+                this.templatePath('gitignore'),
+                this.destinationPath('.gitignore'),
+                this.answers
+            );
             this.template(
                 'front_src/scripts/script.js',
                 this.answers.yo_front_src + '/scripts/script.js'
@@ -122,7 +126,7 @@ module.exports = yeoman.generators.Base.extend({
                 this.answers
             );
             this.fs.copyTpl(
-                this.templatePath('.bowerrc'),
+                this.templatePath('bowerrc'),
                 this.destinationPath('.bowerrc'),
                 this.answers
             );
@@ -135,7 +139,7 @@ module.exports = yeoman.generators.Base.extend({
                 this.destinationPath('package.json.dist')
             );
             this.fs.copy(
-                this.templatePath('.editorconfig'),
+                this.templatePath('editorconfig'),
                 this.destinationPath('.editorconfig')
             );
             this.fs.copy(
