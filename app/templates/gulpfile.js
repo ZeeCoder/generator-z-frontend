@@ -1,10 +1,10 @@
 'use strict';
-var srcPath              = './<%= yo_front_src %>';
-var destPath             = './<%= yo_web %>';
-var js_dest_dir          = '<%= yo_js_dest_dir %>';
-var css_dest_dir         = '<%= yo_css_dest_dir %>';
-var images_dest_dir      = '<%= yo_images_dest_dir %>';
-var gulp_bower_dest_dir  = '<%= yo_gulp_bower_dest_dir %>';
+var srcPath              = './front_src';
+var destPath             = './web';
+var js_dest_dir          = 'js';
+var css_dest_dir         = 'css';
+var images_dest_dir      = 'images';
+var gulp_bower_dest_dir  = 'bower';
 
 var gulp       = require('gulp');
 var $          = require('gulp-load-plugins')();
@@ -17,6 +17,7 @@ var bower      = require('main-bower-files');
 var sprite     = require('css-sprite').stream;
 var _          = require('lodash');
 var argv       = require('yargs').argv;
+var Q          = require('q');
 
 var env = argv.env || 'dev';
 function src(path) { return srcPath + '/' + path; }
@@ -30,7 +31,11 @@ gulp.task('bower', function() {
 
 gulp.task('scripts', function() {
     var arrayBundle = function(srcArray) {
+        var deferredPromises = [];
         _.each(srcArray, function(sourcePath) {
+            var deferred = Q.defer();
+            deferredPromises.push(deferred.promise);
+
             browserify({
                 entries: sourcePath,
                 debug: env == 'dev',
@@ -38,20 +43,30 @@ gulp.task('scripts', function() {
             })
             .bundle()
             .on('error', handleErrors)
+            .on('end', (function(deferred) {
+                deferred.resolve();
+            }.bind(this, deferred)))
             .pipe(source(path.basename(sourcePath)))
             .pipe(buffer())
             // Mangling sometimes screwed up the browserified modules.
             .pipe(env == 'prod' ? $.uglify({mangle: false}) : $.util.noop())
             .pipe(gulp.dest(dest(js_dest_dir)));
         });
+
+        return deferredPromises;
     };
 
+    var bundleDeferred = Q.defer();
     glob(src('scripts/*.js'), {}, function(er, files) {
-        arrayBundle(files);
+        Q.all(arrayBundle(files)).then(function() {
+            bundleDeferred.resolve();
+        });
     });
+
+    return bundleDeferred.promise;
 });
 
-gulp.task('styles', function () {
+gulp.task('styles', ['sprites'], function () {
     return gulp
         .src(src('styles/*.scss'))
         .pipe(env == 'dev' ? $.sourcemaps.init() : $.util.noop())
@@ -62,9 +77,10 @@ gulp.task('styles', function () {
         .on('error', handleErrors)
         .pipe($.autoprefixer({browsers: ['> 1%']}))
         .pipe(env == 'dev' ? $.sourcemaps.write() : $.util.noop())
-        .pipe(env == 'prod' ? $.csso() : $.util.noop())
+        .pipe(env == 'dev' ? $.util.noop() : $.csso())
         .pipe(gulp.dest(dest(css_dest_dir)));
 });
+
 
 gulp.task('sprites', function () {
     var runSpriteBuild = function(folderPath, spriteName, processor) {
@@ -80,26 +96,42 @@ gulp.task('sprites', function () {
             conf.template = src('sprites/css.mustache');
         }
 
+        var deferred = Q.defer();
+
         gulp
             .src(folderPath + '*.png')
             .pipe(sprite(conf))
             .pipe($.if(
                 '*.png',
-                gulp.dest(src(images_dest_dir + '/sprites')),
-                gulp.dest(src('styles/sprites/'))
+                gulp.dest(src(images_dest_dir + '/sprites')).on('end', function() {deferred.resolve();}),
+                gulp.dest(src('styles/sprites/')).on('end', function() {deferred.resolve();})
             ));
+
+        return deferred.promise;
     };
 
+    var buildDeferred = Q.defer();
     glob(src('sprites/*/'), {}, function(er, folders) {
+        var deferredPromises = [];
         _.each(folders, function(folderPath) {
             var spriteName = path.basename(folderPath);
-            runSpriteBuild(folderPath, spriteName, 'css');
-            runSpriteBuild(folderPath, spriteName, 'scss');
+            deferredPromises.push(runSpriteBuild(folderPath, spriteName, 'css'));
+            deferredPromises.push(runSpriteBuild(folderPath, spriteName, 'scss'));
+        });
+
+        Q.all(deferredPromises).then(function() {
+            buildDeferred.resolve();
         });
     });
+
+    return buildDeferred.promise;
 });
 
 gulp.task('images', function () {
+    if (env === 'dev') {
+        return;
+    }
+
     return gulp
         .src(src('images/**/*'))
         .pipe($.imagemin({
