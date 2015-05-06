@@ -66,7 +66,7 @@ gulp.task('scripts', function() {
     return bundleDeferred.promise;
 });
 
-gulp.task('styles', ['sprites'], function () {
+gulp.task('styles', function () {
     return gulp
         .src(src('styles/*.scss'))
         .pipe(env == 'dev' ? $.sourcemaps.init() : $.util.noop())
@@ -134,10 +134,10 @@ gulp.task('images', function () {
 
     return gulp
         .src(src('images/**/*'))
-        .pipe($.imagemin({
+        .pipe($.cache($.imagemin({
             progressive: true,
             interlaced: true
-        }))
+        })))
         .pipe(gulp.dest(dest(images_dest_dir)));
 });
 
@@ -153,7 +153,10 @@ gulp.task('watch', function() {
     });
 });
 
-gulp.task('build', ['bower', 'scripts', 'styles', 'images']);
+gulp.task('build', ['bower', 'scripts', 'sprites', 'images'], function() {
+    gulp.start('styles');
+});
+
 gulp.task('default', ['build']);
 
 function handleErrors() {
