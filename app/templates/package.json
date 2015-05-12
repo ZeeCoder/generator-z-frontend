@@ -38,14 +38,5 @@
   },
   "browserify-shim": {
     "jquery": "global:$"
-  },
-
-  "//": {
-    "browserify shim examples": {
-      "modernizr": "global:Modernizr",
-      "sweet-alert": "global:swal",
-      "ckeditor": "global:CKEDITOR",
-      "angular": "global:angular"
-    }
   }
 }
