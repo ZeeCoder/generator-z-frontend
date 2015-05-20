@@ -1,6 +1,6 @@
 
-### Generator-Z-Frontend
-
+# Generator-Z-Frontend
+[![Project Status](http://stillmaintained.com/ZeeCoder/generator-z-frontend.png)](http://stillmaintained.com/ZeeCoder/generator-z-frontend)
 
 #### Installation and Usage
 
