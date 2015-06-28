@@ -1,5 +1,4 @@
 <%= yo_front_src %>/bower_components
 <%= yo_web %>/css
 <%= yo_web %>/js
-<%= yo_web %>/bower
 node_modules

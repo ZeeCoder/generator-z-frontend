@@ -1,7 +1,7 @@
 {
   "name": "generator-z-frontend",
-  "version": "1.1.16",
-  "description": "A Yeoman Generator to generate frontend boilerplate.",
+  "version": "2.0.0",
+  "description": "A Yeoman Generator to generate a basic frontend dir structure and boilerplate code.",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "ZeeCoder/generator-z-frontend",
@@ -22,9 +22,7 @@
   "dependencies": {
     "yeoman-generator": "^0.18.0",
     "chalk": "^0.5.0",
-    "yosay": "^0.3.0"
-  },
-  "peerDependencies": {
+    "yosay": "^0.3.0",
     "yo": ">=1.0.0"
   }
 }

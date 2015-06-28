@@ -1,22 +1,11 @@
 {
   "name": "project",
   "dependencies": {
-    "jquery": "~2.1.0"<% if (libs.modernizr) { %>,
-    "modernizr": "~2.8.3"<% } %><% if (libs.foundation) { %>,
-    "foundation": "~5.5.0"<% } %>
-  },
-  "devDependencies": {
+    "jquery": "~2.1.0",
+    "modernizr": "~2.8.3",
+    "foundation": "~5.5.0",
     "sass-mediaqueries": "~1.4.0",
-    "normalize-scss": "~3.0.2",
-    "bourbon": "~3.1.8"<% if (libs.clam) { %>,
-    "clam": "0.4.1-alpha"<% } %><% if (libs.q) { %>,
-    "q": "~1.0"<% } %>
-  },
-  "overrides": {<% if (libs.modernizr) { %>
-    "modernizr": {
-      "main": [
-        "modernizr.js"
-      ]
-    }
-  <% } %>}
+    "bourbon": "~3.1.8",
+    "normalize.css": "~3.0.3"
+  }
 }

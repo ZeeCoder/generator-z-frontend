@@ -3,22 +3,9 @@
 // 3rd party
 @import "sass-mediaqueries/media-queries";
 @import "bourbon/app/assets/stylesheets/bourbon";
-@import "normalize-scss/normalize";
 
 // Configurations
-// @import "config/foundation";
 @import "config/global";
-
-// Foundation
-// @import "foundation/scss/foundation/functions";
-// @import "foundation/scss/foundation/components/grid";
-// @import "foundation/scss/foundation/components/visibility";
-
-// For every folder in the sprites/ folder, two scss files will be generated
-// containing sass mixins and css rules. The filenames will be the same as the
-// folder's name suffixed with either 'css' or 'scss'.
-// @import "sprites/s-icon-css";
-// @import "sprites/s-icon-scss";
 
 // Basic styles
 @import "fonts";

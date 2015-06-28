@@ -16,10 +16,8 @@ module.exports = yeoman.generators.Base.extend({
 
         // Have Yeoman greet the user.
         this.log(yosay(
-            'Welcome to the ' + chalk.red('Z-Frontend') + ' generator!'
+            'Welcome to the ' + chalk.red('frontend') + ' generator!'
         ));
-
-        this.log(chalk.bold('Important to note:') + ' after generation is done, creation of the\n' + chalk.dim('`<public-dir>/<images-dir>`') + ' symlink is not handled automatically,\nso you have to create it manually.\n');
 
         var prompts = [
             {
@@ -49,53 +47,16 @@ module.exports = yeoman.generators.Base.extend({
                 default: 'images'
             }, {
                 type: 'input',
-                name: 'yo_gulp_bower_dest_dir',
+                name: 'yo_bower_dest_dir',
                 message: 'The directory containing the bower assets in the public folder.',
                 default: 'bower'
-            }, {
-                type: 'checkbox',
-                name: 'libs',
-                message: 'What libraries do you want to include?',
-                choices: [{
-                    name: 'Clam',
-                    value: 'clam',
-                    checked: true
-                }, {
-                    name: 'Foundation',
-                    value: 'foundation',
-                    checked: true
-                }, {
-                    name: 'Modernizr',
-                    value: 'modernizr',
-                    checked: true
-                }, {
-                    name: 'Q',
-                    value: 'q',
-                    checked: true
-                }]
             }
         ];
 
         this.prompt(prompts, function (answers) {
-            answers.error = {
-                // This is needed to keep the '<%= error.message %>' string in the
-                // gulpfile
-                message: '<%= error.message %>'
-            };
-
             this.answers = answers;
-
-            this.libs.clam = this.answers.libs.indexOf('clam') !== -1;
-            this.libs.foundation = this.answers.libs.indexOf('foundation') !== -1;
-            this.libs.modernizr = this.answers.libs.indexOf('modernizr') !== -1;
-            this.libs.q = this.answers.libs.indexOf('q') !== -1;
-
             done();
         }.bind(this));
-    },
-
-    isLibChecked: function(key) {
-        return this.answers.libs.indexOf(key) !== -1;
     },
 
     writing: {
@@ -106,23 +67,18 @@ module.exports = yeoman.generators.Base.extend({
             );
 
             this.mkdir(this.destinationPath(this.answers.yo_web));
+            this.mkdir(this.destinationPath(this.answers.yo_web + '/' + this.answers.yo_images_dest_dir));
         },
 
         templates: function () {
-            this.template('package.json', 'package.json');
-            this.template('bower.json', 'bower.json');
             this.fs.copyTpl(
                 this.templatePath('gitignore'),
                 this.destinationPath('.gitignore'),
                 this.answers
             );
-            this.template(
-                'front_src/scripts/script.js',
-                this.answers.yo_front_src + '/scripts/script.js'
-            );
             this.fs.copyTpl(
-                this.templatePath('gulpfile.js'),
-                this.destinationPath('gulpfile.js'),
+                this.templatePath('front_src/gulp/util.js'),
+                this.destinationPath('front_src/gulp/util.js'),
                 this.answers
             );
             this.fs.copyTpl(
@@ -131,12 +87,20 @@ module.exports = yeoman.generators.Base.extend({
                 this.answers
             );
             this.fs.copy(
-                this.templatePath('bower.json.dist'),
-                this.destinationPath('bower.json.dist')
+                this.templatePath('gulpfile.js'),
+                this.destinationPath('gulpfile.js')
             );
             this.fs.copy(
-                this.templatePath('package.json.dist'),
-                this.destinationPath('package.json.dist')
+                this.templatePath('package.json'),
+                this.destinationPath('package.json')
+            );
+            this.fs.copy(
+                this.templatePath('package.json.sample'),
+                this.destinationPath('package.json.sample')
+            );
+            this.fs.copy(
+                this.templatePath('bower.json'),
+                this.destinationPath('bower.json')
             );
             this.fs.copy(
                 this.templatePath('editorconfig'),
@@ -157,7 +121,7 @@ module.exports = yeoman.generators.Base.extend({
                     return;
                 }
 
-                this.spawnCommand('gulp', ['bower']);
+                this.spawnCommand('gulp', ['vendors']);
                 this.spawnCommand('gulp', ['styles']);
                 this.spawnCommand('gulp', ['scripts']);
             }.bind(this)
