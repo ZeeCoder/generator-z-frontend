@@ -3,27 +3,25 @@
 var util = require('./front_src/gulp/util');
 util.checkIfEnvIsValid();
 
-var gulp       = require('gulp');
-var $          = require('gulp-load-plugins')();
-var glob       = require('glob');
-var path       = require('path');
-var browserify = require('browserify');
-var source     = require('vinyl-source-stream');
-var buffer     = require('vinyl-buffer');
-var del        = require('del');
-var fs         = require('fs');
-
-if (util.isEnv('dev')) {
-    // The following modules are not installed on prod servers, since they are
-    // not part of the deployment process.
-    var sprity   = require('sprity');
-    var notifier = require('node-notifier');
-}
+var gulp = require('gulp');
+var $    = require('gulp-load-plugins')();
+var del  = require('del');
 
 gulp.task('scripts', function() {
+    var browserify = require('browserify');
+    var source     = require('vinyl-source-stream');
+    var buffer     = require('vinyl-buffer');
+    var glob       = require('glob');
+    var path       = require('path');
+    var Q          = require('q');
+
     del.sync(util.dest(util.jsDestDir));
 
+    var promises = [];
     glob.sync(util.src('scripts/*.js')).forEach(function(scriptPath) {
+        var deferred = Q.defer();
+        promises.push(deferred.promise);
+
         browserify({
             entries: scriptPath
             ,debug: util.isEnv('dev') // Triggers sourcemap generation
@@ -34,22 +32,24 @@ gulp.task('scripts', function() {
         .pipe(source(path.basename(scriptPath)))
         .pipe(buffer())
         .pipe($.if(util.isEnv('prod'), $.uglify({ mangle: false })))
-        .pipe(gulp.dest(util.dest('js')));
+        .pipe(gulp.dest(util.dest('js')))
+        .on('finish', function() { deferred.resolve() });
     });
+
+    return Q.all(promises);
 });
 
 gulp.task('styles', function () {
-    del.sync(util.dest(util.jsDestDir));
+    del.sync(util.dest(util.cssDestDir));
 
     return gulp.src(util.src('styles/*.scss'))
-        .pipe($.sourcemaps.init())
+        .pipe($.if(util.isEnv('dev'), $.sourcemaps.init()))
         .pipe($.sass({
             includePaths: [util.src('bower_components')],
             // Used by the `image-url` sass function
             imagePath: '../' + util.imagesDestDir
         })
         .on('error', util.handleError))
-        .pipe($.if(util.isEnv('dev'), $.sourcemaps.init()))
         .pipe($.autoprefixer({browsers: ['> 1%']}))
         .pipe($.if(util.isEnv('dev'), $.sourcemaps.write()))
         .pipe($.if(util.isEnv('prod'), $.cssmin()))
@@ -61,32 +61,64 @@ gulp.task('vendors', function() {
         return;
     }
 
+    var Q = require('q');
+
+    // Promises are used here, so that the task finished console log would be
+    // accurate.
+    var promises = [];
+
     del.sync(util.dest(util.bowerDestDir));
 
-    // Copy stuff into the bower/ dir
-    gulp.src([
-        util.src('bower_components/jquery/dist/jquery.min.js'),
-        // ,util.src('bower_components/ckeditor/**/*')
-    ], {base: util.src('bower_components')})
-    .pipe(gulp.dest(util.dest(util.bowerDestDir)));
+    (function () {
+        // Copy stuff into the bower/ dir
+        var deferred = Q.defer();
+        promises.push(deferred.promise);
 
-    // Concatenate files into vendor.js
-    gulp.src([
-        util.src('bower_components/modernizr/modernizr.js')
-        // ,util.src('bower_components/foundation/js/foundation.min.js')
-    ])
-    .pipe($.uglify())
-    .pipe($.rename({ basename: 'vendor', extname: '.js' }))
-    .pipe(gulp.dest(util.dest(util.bowerDestDir)));
+        console.log('Copying files to the "' + util.dest(util.bowerDestDir) + '" dir...');
+        gulp
+            .src([
+                util.src('bower_components/jquery/dist/jquery.min.js'),
+                // ,util.src('bower_components/ckeditor/**/*')
+            ], {base: util.src('bower_components')})
+            .pipe(gulp.dest(util.dest(util.bowerDestDir)))
+            .on('finish', function() { deferred.resolve() });
+    })();
 
-    // Concatenate files into vendor.css
-    gulp.src([
-        util.src('bower_components/normalize.css/normalize.css')
-        // ,util.src('bower_components/foundation/js/foundation.min.js')
-    ])
-    .pipe($.cssmin())
-    .pipe($.rename({ basename: 'vendor', extname: '.css' }))
-    .pipe(gulp.dest(util.dest(util.bowerDestDir)));
+    (function () {
+        // Concatenate files into vendor.js
+        var deferred = Q.defer();
+        promises.push(deferred.promise);
+
+        console.log('Creating "vendor.js"...');
+        gulp
+            .src([
+                util.src('bower_components/modernizr/modernizr.js')
+                // ,util.src('bower_components/foundation/js/foundation.min.js')
+            ])
+            .pipe($.concat('vendor.js'))
+            // .pipe($.uglify())
+            .pipe(gulp.dest(util.dest(util.bowerDestDir)))
+            .on('finish', function() { deferred.resolve() });
+    })();
+
+    (function () {
+        // Concatenate files into vendor.css
+        var deferred = Q.defer();
+        promises.push(deferred.promise);
+
+        console.log('Creating "vendor.css"...');
+        gulp
+            .src([
+                util.src('bower_components/normalize.css/normalize.css')
+                // ,util.src('bower_components/foundation/js/foundation.min.js')
+            ])
+            .pipe($.cssmin())
+            .pipe($.concat('vendor.css'))
+            .pipe(gulp.dest(util.dest(util.bowerDestDir)))
+            .on('finish', function() { deferred.resolve() });
+    })();
+
+    return Q.all(promises);
 });
 
 gulp.task('images', function () {
@@ -107,6 +139,8 @@ gulp.task('watch', function() {
     if (!util.isEnv('dev')) {
         return;
     }
+
+    var notifier = require('node-notifier');
 
     $.watch(util.src('styles/**/*.scss'), function () {
         gulp.start('styles');
