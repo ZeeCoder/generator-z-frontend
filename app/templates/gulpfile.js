@@ -1,6 +1,6 @@
 'use strict';
 
-var util = require('./front_src/gulp/util');
+var util = require('./<%= yo_front_src %>/gulp/util');
 util.checkIfEnvIsValid();
 
 var gulp = require('gulp');
@@ -67,20 +67,20 @@ gulp.task('vendors', function() {
     // accurate.
     var promises = [];
 
-    del.sync(util.dest(util.bowerDestDir));
+    del.sync(util.dest(util.vendorDestDir));
 
     (function () {
-        // Copy stuff into the bower/ dir
+        // Copy stuff into the vendor dir
         var deferred = Q.defer();
         promises.push(deferred.promise);
 
-        console.log('Copying files to the "' + util.dest(util.bowerDestDir) + '" dir...');
+        console.log('Copying files to the "' + util.dest(util.vendorDestDir) + '" dir...');
         gulp
             .src([
                 util.src('bower_components/jquery/dist/jquery.min.js'),
                 // ,util.src('bower_components/ckeditor/**/*')
             ], {base: util.src('bower_components')})
-            .pipe(gulp.dest(util.dest(util.bowerDestDir)))
+            .pipe(gulp.dest(util.dest(util.vendorDestDir)))
             .on('finish', function() { deferred.resolve() });
     })();
 
@@ -96,8 +96,11 @@ gulp.task('vendors', function() {
                 // ,util.src('bower_components/foundation/js/foundation.min.js')
             ])
             .pipe($.concat('vendor.js'))
-            // .pipe($.uglify())
-            .pipe(gulp.dest(util.dest(util.bowerDestDir)))
+            // Careful with this, sometimes it mangle's too aggressively. In
+            // those cases, try `$.uglify({ mangle: false })` or change the
+            // library entirely if you want
+            .pipe($.uglify())
+            .pipe(gulp.dest(util.dest(util.vendorDestDir)))
             .on('finish', function() { deferred.resolve() });
     })();
 
@@ -114,7 +117,7 @@ gulp.task('vendors', function() {
             ])
             .pipe($.cssmin())
             .pipe($.concat('vendor.css'))
-            .pipe(gulp.dest(util.dest(util.bowerDestDir)))
+            .pipe(gulp.dest(util.dest(util.vendorDestDir)))
             .on('finish', function() { deferred.resolve() });
     })();
 

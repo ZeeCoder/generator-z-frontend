@@ -47,9 +47,9 @@ module.exports = yeoman.generators.Base.extend({
                 default: 'images'
             }, {
                 type: 'input',
-                name: 'yo_bower_dest_dir',
-                message: 'The directory containing the bower assets in the public folder.',
-                default: 'bower'
+                name: 'yo_vendor_dest_dir',
+                message: 'The directory containing vendor assets in the public folder.',
+                default: 'vendor'
             }
         ];
 
@@ -68,6 +68,7 @@ module.exports = yeoman.generators.Base.extend({
 
             this.mkdir(this.destinationPath(this.answers.yo_web));
             this.mkdir(this.destinationPath(this.answers.yo_web + '/' + this.answers.yo_images_dest_dir));
+            fs.closeSync(fs.openSync(this.answers.yo_web + '/' + this.answers.yo_images_dest_dir + '/.gitkeep', 'w'));
         },
 
         templates: function () {
@@ -78,7 +79,7 @@ module.exports = yeoman.generators.Base.extend({
             );
             this.fs.copyTpl(
                 this.templatePath('front_src/gulp/util.js'),
-                this.destinationPath('front_src/gulp/util.js'),
+                this.destinationPath(this.answers.yo_front_src + '/gulp/util.js'),
                 this.answers
             );
             this.fs.copyTpl(
@@ -86,9 +87,10 @@ module.exports = yeoman.generators.Base.extend({
                 this.destinationPath('.bowerrc'),
                 this.answers
             );
-            this.fs.copy(
+            this.fs.copyTpl(
                 this.templatePath('gulpfile.js'),
-                this.destinationPath('gulpfile.js')
+                this.destinationPath('gulpfile.js'),
+                this.answers
             );
             this.fs.copy(
                 this.templatePath('package.json'),

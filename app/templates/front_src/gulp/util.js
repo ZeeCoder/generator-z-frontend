@@ -11,7 +11,7 @@ module.exports = {
     jsDestDir:     '<%= yo_js_dest_dir %>',
     cssDestDir:    '<%= yo_css_dest_dir %>',
     imagesDestDir: '<%= yo_images_dest_dir %>',
-    bowerDestDir:  '<%= yo_bower_dest_dir %>',
+    vendorDestDir:  '<%= yo_vendor_dest_dir %>',
 
     src: function(path) {
         return this.srcPath + '/' + path;
