@@ -30,7 +30,7 @@ For the generator to work properly, a workflow must be adapted.
 
 It assumes the following:
 
-- The `vendors`, `images` and `watch` tasks are only ever run in the
+- The `vendors`, `images` and `watch` tasks are only ever run on the
 developer's machines.
 
     The results of the vendors and images tasks can be tracked by a vcs even if
@@ -45,7 +45,7 @@ developer's machines.
     in. (ex: sourcemap generation) Also: if more than one frontend developer
     is involved in the project, it's very easy to introduce conflicts. However,
     by not tracking it by the vcs, and rebuilding the results on every
-    deployment, resolves these possible issues.
+    deployment, it resolves these possible issues.
 
 ### Rules
 
