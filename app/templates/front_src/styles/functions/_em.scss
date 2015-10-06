@@ -1,0 +1,15 @@
+/**
+ * Gives an "em" value based on the base value if given, or the base set by
+ * the `em-base` function.
+ *
+ * @param int $px-value The value to be converted to it's em counterpart
+ * @param int $custom-base The base value.
+ * @return string The given pixel value in ems.
+ */
+@function em($px-value, $custom-base: null) {
+    @if $custom-base == null {
+        $custom-base: $em-base;
+    }
+
+    @return ($px-value / $custom-base * 1em);
+}
