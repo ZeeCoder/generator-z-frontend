@@ -1,4 +1,4 @@
-$em-base: 10;
+$g-em-base: 10;
 
 /**
  * Sets the base of the next `em` function call, and returns the set base in
@@ -11,7 +11,7 @@ $em-base: 10;
  * @return string The given number postfixed with "px"
  */
 @function em-base($new-base) {
-    $em-base: $new-base;
+    $g-em-base: $new-base;
 
-    @return ($em-base * 1px);
+    @return ($g-em-base * 1px);
 }

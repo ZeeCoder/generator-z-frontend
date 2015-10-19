@@ -3,6 +3,9 @@
  * This function relies on the global variable '$g-fallback-font', which must be
  * specified in `config/global.scss`.
  */
+
+$g-fallback-font: "Open Sans", Arial, sans-serif !default;
+
 @function ff($fontFamily) {
    @return $fontFamily, $g-fallback-font;
 }

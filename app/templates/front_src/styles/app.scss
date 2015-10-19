@@ -1,22 +1,8 @@
 @charset "UTF-8";
 
-// 3rd party
-@import "sass-mediaqueries/media-queries";
-@import "bourbon/app/assets/stylesheets/bourbon";
-
 // Configurations
-@import "config/global";
-
-// Basic styles
-@import "fonts";
-@import "base";
-
-// Includes
-@import "functions/ff";
-@import "functions/hash-to-rgba";
-@import "functions/em";
-@import "functions/em-base";
+@import "bootstrap";
 
 // Components
-// @import "components/a-component";
-// @import "components/btn";
+@import "components/a-component";
+@import "components/btn";

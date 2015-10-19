@@ -1,0 +1,55 @@
+// This file should contain @imports, configuration variables and other generic
+// stuffs like that.
+// The listed "groups" here - like Other/Includes, etc - don't have to follow
+// each other strictly in this order.
+// Feel free to switch around variables, imports and anything as needed.
+
+// === 3rd party ===
+// Configuration variables could be placed here, so that variables marked as
+// !default can be overwritten.
+// ...
+@import "sass-mediaqueries/media-queries";
+@import "bourbon/app/assets/stylesheets/bourbon";
+
+// === Colors ===
+// All colors on the site must be saved here as a variable.
+// The variables must be prefixed with "c-", and the name must be the color's
+// name. For inspiration on the color names, you can use this:
+// http://chir.ag/projects/name-that-color
+// Also, the color name must be in all lowercase, with the syllables separated
+// by a dash. (Ex.: "$c-this-is-a-color")
+// This convention is based on the following discussion: https://trello.com/c/zJwuLnvf
+$c-white: #fff;
+$c-black: #000;
+
+// === Z-indexes ===
+// For popups, overlays and other componenst placed "over" the standard content
+// a z-index is always declared. By collecting these z-indexes here, you can
+// organise them better. (It does not mean to collect every single z-indexes
+// here, only those that could potentially overlap with each other.)
+// $z-overlay-menu: 200;
+
+// === Fonts ===
+// Fonts should be stored in the "fonts/" folder inside the public folder.
+// The following bourbon mixin will generate the proper css ruleset.
+// It will search the "CustomFont" folder for files like: "CustomFont.ttf",
+// "CustomFont.woff", etc.
+// @include font-face(CustomFont, "../fonts/CustomFont/CustomFont");
+
+// === Includes ===
+// $g-fallback-font: "Open Sans", Arial, sans-serif;
+@import "functions/ff";
+@import "functions/hash-to-rgba";
+@import "functions/em";
+@import "functions/em-base";
+
+// Only very basic rules should be placed here.
+// Ex.: rules for certain tags, like the "body", disabling the "focus outline"
+// on buttons/textareas, etc.
+body {
+    font-family: $g-fallback-font;
+    font-size: 15px;
+    line-height: 30px;
+    color: $c-black;
+    -webkit-font-smoothing: antialiased;
+}

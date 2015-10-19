@@ -8,7 +8,7 @@
  */
 @function em($px-value, $custom-base: null) {
     @if $custom-base == null {
-        $custom-base: $em-base;
+        $custom-base: $g-em-base;
     }
 
     @return ($px-value / $custom-base * 1em);
