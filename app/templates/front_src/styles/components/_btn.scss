@@ -9,8 +9,7 @@
 
 // 'amp' is a short version of 'ampersand' (&). It's called that, since in most
 // cases it tries to imitate the & sign on a block level.
-$amp: ".c-btn-example";
-
+$amp: ".btn";
 #{$amp} {
     // SASS variables are scoped to the current closure, feel free to use them.
     $transitionSpeed: .2s;
