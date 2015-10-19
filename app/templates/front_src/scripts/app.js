@@ -1,5 +1,4 @@
 'use strict';
-var global = require('./module/global');
+var sample = require('./module/sample');
 
-// Standard modules
-global.init();
+sample.init();
