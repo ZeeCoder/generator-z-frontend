@@ -46,8 +46,6 @@ gulp.task('styles', function () {
         .pipe($.if(util.isEnv('dev'), $.sourcemaps.init()))
         .pipe($.sass({
             includePaths: [util.src('bower_components')],
-            // Used by the `image-url` sass function
-            imagePath: '../' + util.imagesDestDir
         })
         .on('error', util.handleError))
         .pipe($.autoprefixer({browsers: ['> 1%']}))

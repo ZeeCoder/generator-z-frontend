@@ -1,0 +1,12 @@
+$g-image-path: "../images" !default;
+
+/**
+ * Generates the public url for the requested asset.
+ *
+ * @param  string $path The asset's realtive path inside the public image
+ * directory
+ * @return The public url
+ */
+@function image-url($path) {
+   @return url("#{$g-image-path}/#{$path}");
+}
