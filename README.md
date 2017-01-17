@@ -1,6 +1,5 @@
 
 # Generator-Z-Frontend
-[![Project Status](http://stillmaintained.com/ZeeCoder/generator-z-frontend.png)](http://stillmaintained.com/ZeeCoder/generator-z-frontend)
 [![npm version](https://badge.fury.io/js/generator-z-frontend.svg)](http://badge.fury.io/js/generator-z-frontend)
 
 ### Installation and Usage
