@@ -1,5 +1,7 @@
 
 # Generator-Z-Frontend
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/ZeeCoder/generator-z-frontend.svg)](https://greenkeeper.io/)
 [![npm version](https://badge.fury.io/js/generator-z-frontend.svg)](http://badge.fury.io/js/generator-z-frontend)
 
 ### Installation and Usage
